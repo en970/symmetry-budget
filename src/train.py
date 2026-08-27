@@ -60,6 +60,22 @@ def measure_flops(model: nn.Module, sample, mask) -> int:
         return 0                      # recorded as 0 = unmeasured, never guessed
 
 
+def load_npz(path: str, n: int, seed: int):
+    """Load the prepared benchmark and take the pre-registered training slice.
+
+    The subsample is drawn with the cell's seed rather than taken from the head:
+    the N axis must vary the amount of data, not which corner of the file it came
+    from, or the small-N cells would all share one idiosyncratic prefix.
+    """
+    z = np.load(path if str(path).endswith(".npz") else f"{path}/toptagging.npz")
+    tr_p4, tr_y = z["train_p4"], z["train_y"]
+    if n < len(tr_y):
+        idx = np.random.default_rng(seed).choice(len(tr_y), size=n, replace=False)
+        tr_p4, tr_y = tr_p4[idx], tr_y[idx]
+    return (torch.from_numpy(tr_p4.copy()), torch.from_numpy(tr_y.astype(np.int64)),
+            torch.from_numpy(z["test_p4"].copy()), torch.from_numpy(z["test_y"].astype(np.int64)))
+
+
 def synthetic(n: int, p: int = 24, seed: int = 0):
     """Separable toy jets for the smoke test. Not physics — pipeline exercise only."""
     g = torch.Generator().manual_seed(seed)
@@ -84,10 +100,7 @@ def run(cell: dict, data_dir: str | None, epochs: int, device: str) -> dict:
         p4_tr, y_tr = synthetic(cell["n"], seed=cell["seed"])
         p4_te, y_te = synthetic(max(cell["n"] // 2, 256), seed=cell["seed"] + 1000)
     else:
-        from .data.toptagging import JetDataset
-        tr = JetDataset(f"{data_dir}/train.h5", n=cell["n"], seed=cell["seed"])
-        te = JetDataset(f"{data_dir}/test.h5", n=40_000, seed=0)
-        p4_tr, y_tr, p4_te, y_te = tr.p4, tr.y, te.p4, te.y
+        p4_tr, y_tr, p4_te, y_te = load_npz(data_dir, cell["n"], cell["seed"])
 
     if cell["break"] == "acceptance":
         p4_tr, p4_te = sym.break_acceptance(p4_tr), sym.break_acceptance(p4_te)

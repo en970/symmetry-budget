@@ -10,3 +10,6 @@ data/cache/
 .DS_Store
 kaggle.json
 .env
+kaggle.json
+access_token
+.kaggle/
