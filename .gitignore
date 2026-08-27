@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+data/raw/
+data/cache/
+*.h5
+*.parquet
+*.ckpt
+.DS_Store
+kaggle.json
+.env

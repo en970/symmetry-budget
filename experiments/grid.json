@@ -1,0 +1,1082 @@
+[
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 1000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "93b452cc43"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 1000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "22257f46d1"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 3000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "81134deb77"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 3000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "fb3cdaecbf"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 10000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "d8e0bcb9d4"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 10000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "f793eb07c0"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 30000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "dd76f52f50"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 30000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "3e296366d6"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 100000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "33496b646f"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 100000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "9511cc4941"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 300000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "3ef5ec259d"
+  },
+  {
+    "phase": 1,
+    "model": "M0",
+    "n": 300000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "c1dfbcf2e7"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 1000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "42fb3ab32f"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 1000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "aed6ed5853"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 3000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "61a01a88af"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 3000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "6779932042"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 10000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "3e2ac81358"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 10000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "a039c919c1"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 30000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "99211d5ee6"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 30000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "3bc7c6851d"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 100000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "ee9a33bdae"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 100000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "ee69a56d9a"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 300000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "02a4373216"
+  },
+  {
+    "phase": 1,
+    "model": "M1",
+    "n": 300000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "916483b866"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 1000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "cd5c2cc9d3"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 1000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "d9699ad426"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 3000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "0957ae1352"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 3000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "84a1887ad3"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 10000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "bdcff12f48"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 10000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "ce28b24353"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 30000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "5bc3c7c61d"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 30000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "f3baa1d93f"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 100000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "31db9c1793"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 100000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "46504fb59b"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 300000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "e178319de5"
+  },
+  {
+    "phase": 1,
+    "model": "M2",
+    "n": 300000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "889a047740"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 1000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "a4a388d941"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 1000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "e80eb9b5f9"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 3000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "8933f2ea47"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 3000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "0d8d180fcb"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 10000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "265dfc29d4"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 10000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "7c1dd574f7"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 30000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "532ea6e441"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 30000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "dbc7d30923"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 100000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "77db38c659"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 100000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "d6e5cd4049"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 300000,
+    "seed": 0,
+    "break": "none",
+    "budget": "params",
+    "id": "cd82d6eb69"
+  },
+  {
+    "phase": 1,
+    "model": "M3",
+    "n": 300000,
+    "seed": 1,
+    "break": "none",
+    "budget": "params",
+    "id": "3b1057b3fd"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 1000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "1d2577327d"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 1000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "d40ab7c29f"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 1000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "6c404f84ce"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 1000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "ede03963c9"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 3000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "55c02b65b7"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 3000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "0b515c4601"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 3000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "57aaf3d923"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 3000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "e6045acc2a"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 10000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "8d045943ea"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 10000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "1b2546d486"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 10000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "ce8017d96e"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 10000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "d30e741b03"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 30000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "35638d7d0e"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 30000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "6037afe8cf"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 30000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "b329dd0a31"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 30000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "5dcf803ede"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 100000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "6455d3c57a"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 100000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "c5cbde691d"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 100000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "1e1487fb25"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 100000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "f748357b62"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 300000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "87f417464a"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 300000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "10a8655b5e"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 300000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "cc4dcbea5e"
+  },
+  {
+    "phase": 2,
+    "model": "M1",
+    "n": 300000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "340b6056a9"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 1000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "7b17b496ac"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 1000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "744bd5bbd2"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 1000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "0ed4db1df9"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 1000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "1765482a60"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 3000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "a75966757b"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 3000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "3a1084af78"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 3000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "7c9f35e888"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 3000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "d406acc215"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 10000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "d6e5aab96a"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 10000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "d60cffc929"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 10000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "632bfd3715"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 10000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "8a993881ff"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 30000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "d25afa9dee"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 30000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "5d2de239ec"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 30000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "49e91fa36e"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 30000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "def44bd922"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 100000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "138bf701f7"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 100000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "5806233f80"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 100000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "f3515e1d40"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 100000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "f6cc9d0650"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 300000,
+    "seed": 0,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "bd246b73aa"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 300000,
+    "seed": 0,
+    "break": "axis",
+    "budget": "params",
+    "id": "9c8815c45f"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 300000,
+    "seed": 1,
+    "break": "acceptance",
+    "budget": "params",
+    "id": "ffbbb2db03"
+  },
+  {
+    "phase": 2,
+    "model": "M3",
+    "n": 300000,
+    "seed": 1,
+    "break": "axis",
+    "budget": "params",
+    "id": "5baf8eabc1"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 1000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "86f0eebfe0"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 1000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "7402d32298"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 3000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "b20cba7c32"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 3000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "3ba777f949"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 10000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "b918007d24"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 10000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "83c460d28a"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 30000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "c698c338e4"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 30000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "83f15d4500"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 100000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "2aa30a7690"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 100000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "c0b36ef067"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 300000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "aabd1920a4"
+  },
+  {
+    "phase": 3,
+    "model": "M1",
+    "n": 300000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "6cb3115442"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 1000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "684aeaeb99"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 1000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "4a5b0899f3"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 3000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "60b63c6a58"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 3000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "98f17d8fac"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 10000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "1025707860"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 10000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "477de78e67"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 30000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "fd100be68d"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 30000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "6a87d65399"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 100000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "50b0081edd"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 100000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "dfca57259e"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 300000,
+    "seed": 0,
+    "break": "none",
+    "budget": "flops",
+    "id": "a5c7fb8fab"
+  },
+  {
+    "phase": 3,
+    "model": "M3",
+    "n": 300000,
+    "seed": 1,
+    "break": "none",
+    "budget": "flops",
+    "id": "a4fb64f79b"
+  }
+]
