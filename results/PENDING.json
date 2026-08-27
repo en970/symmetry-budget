@@ -1,120 +1,120 @@
 {
-  "enesoz970/sb-p1-m1-s0-none": {
+  "enesoz970/sb-p1-m2-s0-none": {
     "cells": [
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 1000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "42fb3ab32f"
+        "id": "cd5c2cc9d3"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 3000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "61a01a88af"
+        "id": "0957ae1352"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 10000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "3e2ac81358"
+        "id": "bdcff12f48"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 30000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "99211d5ee6"
+        "id": "5bc3c7c61d"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 100000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "ee9a33bdae"
+        "id": "31db9c1793"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 300000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "02a4373216"
+        "id": "e178319de5"
       }
     ],
-    "label": "M1 seed=0 break=none (6 cells)"
+    "label": "M2 seed=0 break=none (6 cells)"
   },
-  "enesoz970/sb-p1-m1-s1-none": {
+  "enesoz970/sb-p1-m2-s1-none": {
     "cells": [
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 1000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "aed6ed5853"
+        "id": "d9699ad426"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 3000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "6779932042"
+        "id": "84a1887ad3"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 10000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "a039c919c1"
+        "id": "ce28b24353"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 30000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "3bc7c6851d"
+        "id": "f3baa1d93f"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 100000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "ee69a56d9a"
+        "id": "46504fb59b"
       },
       {
         "phase": 1,
-        "model": "M1",
+        "model": "M2",
         "n": 300000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "916483b866"
+        "id": "889a047740"
       }
     ],
-    "label": "M1 seed=1 break=none (6 cells)"
+    "label": "M2 seed=1 break=none (6 cells)"
   }
 }
