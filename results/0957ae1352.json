@@ -1,0 +1,17 @@
+{
+  "id": "0957ae1352",
+  "phase": 1,
+  "model": "M2",
+  "n": 3000,
+  "seed": 0,
+  "break": "none",
+  "budget": "params",
+  "rej_at_30": 54.17789757412399,
+  "auc": 0.9384780419510488,
+  "accuracy": 0.853825,
+  "train_seconds": 7.27,
+  "n_params": 101802,
+  "flops_per_forward": 102160400,
+  "status": "ok",
+  "synthetic": false
+}

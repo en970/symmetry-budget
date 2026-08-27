@@ -1,0 +1,17 @@
+{
+  "id": "ce28b24353",
+  "phase": 1,
+  "model": "M2",
+  "n": 10000,
+  "seed": 1,
+  "break": "none",
+  "budget": "params",
+  "rej_at_30": 120.35928143712574,
+  "auc": 0.9594614215355384,
+  "accuracy": 0.89775,
+  "train_seconds": 24.25,
+  "n_params": 101802,
+  "flops_per_forward": 102160400,
+  "status": "ok",
+  "synthetic": false
+}
