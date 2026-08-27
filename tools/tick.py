@@ -1,11 +1,11 @@
-"""One turn of the autonomous loop: collect, dispatch, close a phase if it is done.
+"""One turn of the autonomous loop: collect, dispatch, and cross phase boundaries.
 
-Designed to be called repeatedly and to be safe when nothing has changed. Every
-decision it makes is mechanical; the moment a decision would require judgement it
-stops and says so rather than choosing.
+Runs unattended, including across phase boundaries. Every decision is mechanical;
+the two that are not — an inconclusive phase, and the final interpretation — stop
+the loop instead of being guessed.
 
 Exit codes:
-    0  ran normally (work done or nothing to do)
+    0  ran normally; there is more to do
     3  stopped and wants a human — reason on stdout
 """
 from __future__ import annotations
@@ -21,12 +21,12 @@ def sh(*cmd: str) -> tuple[int, str]:
     return r.returncode, (r.stdout + r.stderr).strip()
 
 
-def phase_counts(phase: int) -> tuple[int, int, int]:
+def counts(phase: int) -> tuple[int, int, int]:
     grid = json.loads((ROOT / "experiments/grid.json").read_text())
     ids = {c["id"] for c in grid if c["phase"] == phase}
     done = failed = 0
     for p in (ROOT / "results").glob("*.json"):
-        if p.stem == "PENDING" or p.stem not in ids:
+        if p.stem not in ids:
             continue
         try:
             d = json.loads(p.read_text())
@@ -37,21 +37,27 @@ def phase_counts(phase: int) -> tuple[int, int, int]:
     return done, failed, len(ids)
 
 
-def checkpoint(phase: int, done: int, failed: int, total: int, *, push: bool) -> None:
-    """Commit progress every turn rather than only when the phase closes.
+def phases() -> list[int]:
+    grid = json.loads((ROOT / "experiments/grid.json").read_text())
+    return sorted({c["phase"] for c in grid})
 
-    A grid runs for hours; committing only at the end puts every intermediate
-    result at the mercy of a dropped session or an exhausted quota. Empty commits
-    are skipped, so a quiet turn leaves no trace.
-    """
+
+def open_phase() -> int | None:
+    """The first phase with cells still outstanding. Phases run in order (§5)."""
+    for ph in phases():
+        done, _, total = counts(ph)
+        if done < total:
+            return ph
+    return None
+
+
+def checkpoint(msg: str, *, push: bool) -> None:
     sh("git", "add", "results", "reports")
-    code, _ = sh("git", "diff", "--cached", "--quiet")
-    if code == 0:
+    if sh("git", "diff", "--cached", "--quiet")[0] == 0:
         print("checkpoint: no change")
         return
     code, out = sh("git", "commit", "-m",
-                   f"Phase {phase} progress: {done}/{total} cells ({failed} failed)\n\n"
-                   f"Checkpoint written by tools/tick.py.\n\n"
+                   f"{msg}\n\nCheckpoint written by tools/tick.py.\n\n"
                    f"Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>")
     if code == 0:
         if push:
@@ -61,56 +67,64 @@ def checkpoint(phase: int, done: int, failed: int, total: int, *, push: bool) ->
         print(f"checkpoint failed: {out.splitlines()[0] if out else '?'}")
 
 
+def close_phase(phase: int, *, push: bool) -> int:
+    """Audit a finished phase and decide whether the loop may continue."""
+    print(f"\n— phase {phase} complete, auditing —")
+    code, out = sh(sys.executable, "tools/audit.py", "--phase", str(phase))
+    print(out)
+    sh(sys.executable, "tools/report.py")
+
+    if code == 3:
+        checkpoint(f"Phase {phase} inconclusive", push=push)
+        print(f"\nSTOP: phase {phase} cannot be analysed. A human should read the failure "
+              f"reasons in results/ before anything else runs.")
+        return 3
+
+    checkpoint(f"Phase {phase} closed and audited", push=push)
+    nxt = open_phase()
+    if nxt is None:
+        print("\nAll phases complete. STOP: the loop does not write the final "
+              "interpretation. Run /audit for the adversarial review, then the report.")
+        return 3
+    print(f"\nphase {phase} closed; continuing with phase {nxt}")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--phase", type=int, default=1)
+    ap.add_argument("--phase", type=int, help="pin to one phase (default: follow the open one)")
     ap.add_argument("--limit", type=int, default=2)
     ap.add_argument("--epochs", type=int, default=12)
     ap.add_argument("--no-push", action="store_true")
     a = ap.parse_args()
 
     print("— collect —")
-    _, out = sh(sys.executable, "tools/collect.py")
-    print(out)
+    print(sh(sys.executable, "tools/collect.py")[1])
 
-    done, failed, total = phase_counts(a.phase)
-    print(f"\nphase {a.phase}: {done}/{total} returned, {failed} failed")
+    phase = a.phase or open_phase()
+    if phase is None:
+        return close_phase(phases()[-1], push=not a.no_push)
 
-    # Stopping rule, checked before dispatching anything further: continuing to
-    # burn GPU quota on a phase that is already inconclusive helps nobody.
+    done, failed, total = counts(phase)
+    print(f"\nphase {phase}: {done}/{total} returned, {failed} failed")
+
+    # Checked before dispatching more: spending quota on a phase §5 already makes
+    # inconclusive helps nobody.
     if total and failed / total > 0.20:
-        print(f"\nSTOP: {failed}/{total} cells failed (>20%). PROTOCOL §5 makes this "
-              f"phase inconclusive. Not dispatching further cells; a human should "
-              f"look at the failure reasons before anything else runs.")
+        checkpoint(f"Phase {phase} inconclusive ({failed}/{total} failed)", push=not a.no_push)
+        print(f"\nSTOP: {failed}/{total} cells failed (>20%). PROTOCOL §5 makes this phase "
+              f"inconclusive. Not dispatching further cells.")
         return 3
 
-    if done < total:
-        print("\n— dispatch —")
-        _, out = sh(sys.executable, "tools/submit.py", "--phase", str(a.phase),
-                    "--limit", str(a.limit), "--epochs", str(a.epochs))
-        print(out)
-        checkpoint(a.phase, done, failed, total, push=not a.no_push)
-        return 0
+    if done >= total:
+        return close_phase(phase, push=not a.no_push)
 
-    # Phase complete.
-    print(f"\n— phase {a.phase} closed —")
-    _, out = sh(sys.executable, "tools/report.py")
-    print(out)
-
-    if not a.no_push:
-        sh("git", "add", "results", "reports")
-        code, out = sh("git", "commit", "-m",
-                       f"Phase {a.phase} results ({done - failed} ok, {failed} failed)\n\n"
-                       f"Generated by tools/tick.py. Numbers regenerated from results/ by "
-                       f"tools/report.py; no hand-edited values.\n\n"
-                       f"Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>")
-        if code == 0:
-            sh("git", "push", "origin", "main")
-            print("committed and pushed")
-
-    print(f"\nNEXT: phase {a.phase} needs the result-auditor before any prose is written "
-          f"about it. Run /audit {a.phase}. The loop does not interpret results.")
-    return 3
+    print("\n— dispatch —")
+    print(sh(sys.executable, "tools/submit.py", "--phase", str(phase),
+             "--limit", str(a.limit), "--epochs", str(a.epochs))[1])
+    checkpoint(f"Phase {phase} progress: {done}/{total} cells ({failed} failed)",
+               push=not a.no_push)
+    return 0
 
 
 if __name__ == "__main__":
