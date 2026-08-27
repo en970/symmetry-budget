@@ -121,4 +121,33 @@ the default rather than an act of will.
 
 ## Amendments
 
-*(none yet)*
+### A1 — 2026-08-28: how Phase 3 matches compute
+
+**Recorded before any Phase 3 cell has run, and before Phase 1 has been analysed.**
+
+§3 specifies `budget ∈ {params, flops}` but does not say what "matched FLOPs" means, and the
+implementation did not match anything at all: `build()` returned identical models regardless
+of budget, so Phase 3 would have been a verbatim repeat of Phase 1 and H3 would never have
+been tested. That is a defect, not a change of intent, and it is fixed here.
+
+Measured at P=100 constituents: M1 costs 10.1M FLOPs per forward pass, M3 costs 1.069B — a
+factor of **106** at matched parameter count. So "equal parameters" hands the equivariant
+model two orders of magnitude more compute, which is precisely what H3 suspects.
+
+**Decision.** Phase 3 matches *forward-pass* FLOPs, and matches them by **enlarging M1**
+rather than shrinking M3. Reaching M3's cost requires M1 at hidden=1396 — 7.8M parameters
+against M3's 98k, an 80-fold difference in capacity.
+
+Rejected alternatives, and why:
+
+- *Shrinking M3 to M1's budget* would cripple the model under test and manufacture the
+  conclusion H3 predicts. A hypothesis must not be handed its own evidence.
+- *Matching total training compute instead* is defensible and arguably closer to the
+  practitioner's question, but it confounds architecture with optimisation schedule: more
+  steps is not the same intervention as more capacity.
+
+**Known limitation, stated in advance.** A 7.8M-parameter Deep Sets model will almost
+certainly overfit at n=1,000. That is not a flaw in the design — it is a real property of the
+comparison, and it makes H3 falsifiable in an informative direction: if the enlarged baseline
+fails at small N *because* it overfits, then equivariance is buying sample efficiency rather
+than merely spending compute, and H3 is falsified for a reason worth reporting.

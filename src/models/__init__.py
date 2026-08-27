@@ -24,10 +24,24 @@ SPECS = {
 # Which view of a jet each model consumes.
 INPUT = {"M0": "features", "M1": "features", "M2": "features", "M3": "p4"}
 
+# Phase 3 (PROTOCOL amendment A1): matched forward-pass FLOPs instead of matched
+# parameters. Measured at P=100, M3 costs 1.069B FLOPs per example against M1's
+# 10.1M — a factor of 106 at equal parameter count. Reaching M3's budget takes
+# M1 at hidden=1396 (7.8M parameters against M3's 98k).
+#
+# The baseline is enlarged rather than the equivariant model shrunk: shrinking
+# M3 would cripple the model under test and manufacture H3's predicted result.
+FLOPS_MATCHED = {
+    "M1": dict(hidden=1396, latent=1396),
+}
 
-def build(model_id: str) -> nn.Module:
+
+def build(model_id: str, budget: str = "params") -> nn.Module:
     spec = SPECS[model_id]
-    return spec["cls"](**spec["kwargs"])
+    kwargs = spec["kwargs"]
+    if budget == "flops" and model_id in FLOPS_MATCHED:
+        kwargs = {**kwargs, **FLOPS_MATCHED[model_id]}
+    return spec["cls"](**kwargs)
 
 
 def n_params(model: nn.Module) -> int:

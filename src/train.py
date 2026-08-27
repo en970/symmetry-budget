@@ -129,7 +129,7 @@ def run(cell: dict, data_dir: str | None, epochs: int, device: str,
     elif cell["break"] == "axis":
         p4_tr, p4_te = sym.break_axis(p4_tr), sym.break_axis(p4_te)
 
-    model = build(model_id).to(device)
+    model = build(model_id, cell["budget"]).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
     lossf = nn.CrossEntropyLoss()
     # LorentzNet materialises (B, P, P, m_dim) tensors, so its memory grows with
