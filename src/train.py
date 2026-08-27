@@ -88,7 +88,29 @@ def synthetic(n: int, p: int = 24, seed: int = 0):
     return p4 * mask.unsqueeze(-1), y
 
 
-def run(cell: dict, data_dir: str | None, epochs: int, device: str) -> dict:
+# Anything above this is a remote job. The laptop this project is developed on
+# has 16 GB, and LorentzNet's memory grows with the square of the constituent
+# count — a full-size cell run locally takes the machine down. Enforced here
+# rather than remembered, because it was already forgotten once.
+LOCAL_CELL_LIMIT = 2_000
+
+
+def guard_local(cell: dict, data_dir: str | None, force: bool) -> None:
+    on_kaggle = pathlib.Path("/kaggle").exists()
+    if on_kaggle or data_dir is None or force:
+        return
+    if cell["n"] > LOCAL_CELL_LIMIT or cell["model"] == "M3":
+        raise SystemExit(
+            f"refusing to run {cell['model']} n={cell['n']:,} on real data locally.\n"
+            f"Heavy cells belong on Kaggle: `python3 tools/submit.py --cell {cell['id']}`.\n"
+            f"Locally, use --smoke for the synthetic pipeline check, or pass --force "
+            f"if you have a reason and the memory to back it."
+        )
+
+
+def run(cell: dict, data_dir: str | None, epochs: int, device: str,
+        force: bool = False) -> dict:
+    guard_local(cell, data_dir, force)
     torch.manual_seed(cell["seed"])
     np.random.seed(cell["seed"])
 
@@ -169,6 +191,8 @@ def main() -> None:
     ap.add_argument("--epochs", type=int, default=8)
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--device", default="cpu")
+    ap.add_argument("--force", action="store_true",
+                    help="override the local-machine guard (you probably do not want this)")
     a = ap.parse_args()
 
     if a.smoke:
@@ -183,7 +207,7 @@ def main() -> None:
 
     grid = json.loads((ROOT / "experiments/grid.json").read_text())
     cell = next(c for c in grid if c["id"] == a.cell)
-    result = run(cell, a.data_dir, a.epochs, a.device)
+    result = run(cell, a.data_dir, a.epochs, a.device, force=a.force)
     out = ROOT / "results" / f"{cell['id']}.json"
     out.write_text(json.dumps(result, indent=2) + "\n")
     print(f"wrote {out}")

@@ -18,7 +18,19 @@ PENDING = ROOT / "results" / "PENDING.json"
 DATA_KERNEL = "sb-prepare-data"
 
 HEADER = '''"""Auto-generated cell runner. Do not edit — regenerate with tools/submit.py."""
-import pathlib, json, sys
+import os, sys, subprocess, pathlib, json
+
+# Kaggle allocates a P100 (sm_60); the image's PyTorch 2.10 supports sm_70 and
+# above, so every GPU cell dies on cudaErrorNoKernelImageForDevice. The GPU type
+# cannot be chosen through the API (--accelerator is accepted and ignored, even
+# for nonsense values), so the fix is to install a build that still supports
+# sm_60. It must happen before torch is imported: reloading it in-process fails
+# because the C extensions cannot re-register their namespaces.
+if os.environ.get("SB_TORCH_READY") != "1":
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "torch==2.5.1",
+                    "--index-url", "https://download.pytorch.org/whl/cu121"], check=False)
+    os.environ["SB_TORCH_READY"] = "1"
+    os.execv(sys.executable, [sys.executable] + sys.argv)
 
 SOURCE = {source!r}
 for rel, text in SOURCE.items():
