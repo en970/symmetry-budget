@@ -37,6 +37,30 @@ def phase_counts(phase: int) -> tuple[int, int, int]:
     return done, failed, len(ids)
 
 
+def checkpoint(phase: int, done: int, failed: int, total: int, *, push: bool) -> None:
+    """Commit progress every turn rather than only when the phase closes.
+
+    A grid runs for hours; committing only at the end puts every intermediate
+    result at the mercy of a dropped session or an exhausted quota. Empty commits
+    are skipped, so a quiet turn leaves no trace.
+    """
+    sh("git", "add", "results", "reports")
+    code, _ = sh("git", "diff", "--cached", "--quiet")
+    if code == 0:
+        print("checkpoint: no change")
+        return
+    code, out = sh("git", "commit", "-m",
+                   f"Phase {phase} progress: {done}/{total} cells ({failed} failed)\n\n"
+                   f"Checkpoint written by tools/tick.py.\n\n"
+                   f"Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>")
+    if code == 0:
+        if push:
+            sh("git", "push", "origin", "main")
+        print(f"checkpoint committed{' and pushed' if push else ''}")
+    else:
+        print(f"checkpoint failed: {out.splitlines()[0] if out else '?'}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--phase", type=int, default=1)
@@ -65,6 +89,7 @@ def main() -> int:
         _, out = sh(sys.executable, "tools/submit.py", "--phase", str(a.phase),
                     "--limit", str(a.limit), "--epochs", str(a.epochs))
         print(out)
+        checkpoint(a.phase, done, failed, total, push=not a.no_push)
         return 0
 
     # Phase complete.

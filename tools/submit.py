@@ -36,7 +36,8 @@ print("device:", device, "| cell:", CELL, flush=True)
 
 data = "/kaggle/input/{data_kernel}/toptagging.npz"
 if not pathlib.Path(data).exists():
-    raise SystemExit(f"prepared dataset missing at {{data}} — run {data_kernel} first")
+    have = [str(p) for p in pathlib.Path("/kaggle/input").glob("*/*")][:20]
+    raise SystemExit(f"prepared dataset missing at {{data}}; /kaggle/input contains {{have}}")
 
 try:
     result = run(CELL, data, epochs={epochs}, device=device)
@@ -76,6 +77,16 @@ def main() -> None:
     ap.add_argument("--cell", help="dispatch one specific cell id")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
+
+    # Dispatching before the data kernel has finished produces a grid of cells
+    # that all fail on a missing mount — which is exactly how the first two cells
+    # of this project were wasted. Check once, here, rather than per cell.
+    data_ref = f"{username()}/{DATA_KERNEL}"
+    state = kernel_status(data_ref)
+    if state != "complete":
+        print(f"data kernel {data_ref} is '{state}', not 'complete' — refusing to dispatch. "
+              f"Cells would mount an empty input and fail.")
+        return
 
     grid = json.loads((ROOT / "experiments/grid.json").read_text())
     done = {p.stem for p in (ROOT / "results").glob("*.json") if p.stem != "PENDING"}
