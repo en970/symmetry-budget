@@ -20,6 +20,14 @@ def username() -> str:
     raise RuntimeError("Kaggle username not configured — run `kaggle config set -n username -v <name>`")
 
 
+# Kaggle hands out a P100 by default, whose sm_60 is below the sm_70 floor of
+# the PyTorch build in the current image — every GPU cell dies on
+# cudaErrorNoKernelImageForDevice. Asking for T4 (sm_75) explicitly is the fix.
+# The allowed names are a server-side enum absent from the SDK; this one was
+# established by trial, so it is recorded here rather than rediscovered.
+ACCELERATOR = "GPU_T4_X2"
+
+
 def push_kernel(slug: str, script: str, *, datasets: list[str] | None = None,
                 kernels: list[str] | None = None,
                 gpu: bool = True, internet: bool = False) -> str:
@@ -42,8 +50,10 @@ def push_kernel(slug: str, script: str, *, datasets: list[str] | None = None,
             "competition_sources": [],
             "kernel_sources": kernels or [],
         }, indent=2))
-        r = subprocess.run(["kaggle", "kernels", "push", "-p", str(d)],
-                           capture_output=True, text=True)
+        cmd = ["kaggle", "kernels", "push", "-p", str(d)]
+        if gpu:
+            cmd += ["--accelerator", ACCELERATOR]
+        r = subprocess.run(cmd, capture_output=True, text=True)
         if r.returncode != 0:
             raise RuntimeError(f"kernel push failed: {r.stderr.strip() or r.stdout.strip()}")
     return ref

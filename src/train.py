@@ -110,7 +110,13 @@ def run(cell: dict, data_dir: str | None, epochs: int, device: str) -> dict:
     model = build(model_id).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
     lossf = nn.CrossEntropyLoss()
-    loader = DataLoader(TensorDataset(p4_tr, y_tr), batch_size=128, shuffle=True, drop_last=False)
+    # LorentzNet materialises (B, P, P, m_dim) tensors, so its memory grows with
+    # the square of the constituent count. At P=100 and B=128 that is ~340 MB per
+    # intermediate, several per block — enough to exhaust a 16 GB card. The batch
+    # size is therefore a property of the model, not a global constant.
+    batch = 32 if INPUT[model_id] == "p4" else 128
+    loader = DataLoader(TensorDataset(p4_tr, y_tr), batch_size=batch, shuffle=True,
+                        drop_last=False)
 
     t0 = time.time()
     model.train()
@@ -130,8 +136,9 @@ def run(cell: dict, data_dir: str | None, epochs: int, device: str) -> dict:
     model.eval()
     scores = []
     with torch.no_grad():
-        for i in range(0, len(p4_te), 256):
-            b = p4_te[i:i + 256].to(device)
+        eval_batch = 32 if view == "p4" else 256
+        for i in range(0, len(p4_te), eval_batch):
+            b = p4_te[i:i + eval_batch].to(device)
             m = mask_of(b)
             xb = b if view == "p4" else features(b)
             scores.append(torch.softmax(model(xb, m), -1)[:, 1].cpu())
