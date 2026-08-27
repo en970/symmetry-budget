@@ -1,102 +1,120 @@
 {
-  "enesoz970/sb-p1-m0-s0-none": {
+  "enesoz970/sb-p1-m1-s0-none": {
     "cells": [
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
+        "n": 1000,
+        "seed": 0,
+        "break": "none",
+        "budget": "params",
+        "id": "42fb3ab32f"
+      },
+      {
+        "phase": 1,
+        "model": "M1",
         "n": 3000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "81134deb77"
+        "id": "61a01a88af"
       },
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
         "n": 10000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "d8e0bcb9d4"
+        "id": "3e2ac81358"
       },
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
         "n": 30000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "dd76f52f50"
+        "id": "99211d5ee6"
       },
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
         "n": 100000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "33496b646f"
+        "id": "ee9a33bdae"
       },
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
         "n": 300000,
         "seed": 0,
         "break": "none",
         "budget": "params",
-        "id": "3ef5ec259d"
+        "id": "02a4373216"
       }
     ],
-    "label": "M0 seed=0 break=none (5 cells)"
+    "label": "M1 seed=0 break=none (6 cells)"
   },
-  "enesoz970/sb-p1-m0-s1-none": {
+  "enesoz970/sb-p1-m1-s1-none": {
     "cells": [
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
+        "n": 1000,
+        "seed": 1,
+        "break": "none",
+        "budget": "params",
+        "id": "aed6ed5853"
+      },
+      {
+        "phase": 1,
+        "model": "M1",
         "n": 3000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "fb3cdaecbf"
+        "id": "6779932042"
       },
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
         "n": 10000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "f793eb07c0"
+        "id": "a039c919c1"
       },
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
         "n": 30000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "3e296366d6"
+        "id": "3bc7c6851d"
       },
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
         "n": 100000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "9511cc4941"
+        "id": "ee69a56d9a"
       },
       {
         "phase": 1,
-        "model": "M0",
+        "model": "M1",
         "n": 300000,
         "seed": 1,
         "break": "none",
         "budget": "params",
-        "id": "c1dfbcf2e7"
+        "id": "916483b866"
       }
     ],
-    "label": "M0 seed=1 break=none (5 cells)"
+    "label": "M1 seed=1 break=none (6 cells)"
   }
 }

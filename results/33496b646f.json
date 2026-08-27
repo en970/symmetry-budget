@@ -1,0 +1,17 @@
+{
+  "id": "33496b646f",
+  "phase": 1,
+  "model": "M0",
+  "n": 100000,
+  "seed": 0,
+  "break": "none",
+  "budget": "params",
+  "rej_at_30": 147.7941176470588,
+  "auc": 0.9641688042201055,
+  "accuracy": 0.9073,
+  "train_seconds": 34.87,
+  "n_params": 99530,
+  "flops_per_forward": 10050768,
+  "status": "ok",
+  "synthetic": false
+}
