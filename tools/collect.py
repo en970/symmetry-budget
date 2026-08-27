@@ -16,17 +16,22 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 PENDING = ROOT / "results" / "PENDING.json"
 
 
-def fetch_output(ref: str, dest: pathlib.Path) -> pathlib.Path | None:
+def fetch_outputs(ref: str, cells: list[dict]) -> list[pathlib.Path]:
+    """Pull every result file a grouped kernel produced. A kernel that died
+    part-way still delivers the cells that finished before it."""
+    got = []
     with tempfile.TemporaryDirectory() as td:
         r = subprocess.run(["kaggle", "kernels", "output", ref, "-p", td],
                            capture_output=True, text=True)
         if r.returncode != 0:
-            return None
-        src = pathlib.Path(td) / "result.json"
-        if not src.exists():
-            return None
-        dest.write_text(src.read_text())
-        return dest
+            return got
+        for cell in cells:
+            src = pathlib.Path(td) / f"{cell['id']}.json"
+            if src.exists():
+                dest = ROOT / "results" / f"{cell['id']}.json"
+                dest.write_text(src.read_text())
+                got.append(dest)
+    return got
 
 
 def main() -> None:
@@ -41,38 +46,36 @@ def main() -> None:
         return
 
     still, collected, rejected = {}, 0, 0
-    for ref, cell in pending.items():
+    for ref, entry in pending.items():
+        cells = entry.get("cells", [entry])          # tolerate the old single-cell format
         state = kernel_status(ref)
         if state in ("running", "queued", "unknown"):
-            still[ref] = cell
-            print(f"  {state:<8} {ref}")
+            still[ref] = entry
+            print(f"  {state:<8} {ref}  {entry.get('label', '')}")
             continue
 
-        dest = ROOT / "results" / f"{cell['id']}.json"
-        got = fetch_output(ref, dest)
-        if got is None:
-            # The kernel finished without producing a result: that is itself data.
-            dest.write_text(json.dumps({
-                **{k: cell[k] for k in ("id", "phase", "model", "n", "seed", "break", "budget")},
-                "status": "failed",
-                "failure_reason": f"kernel {state} with no result.json (check Kaggle logs)",
-            }, indent=2) + "\n")
-            print(f"  NO OUTPUT {ref} -> recorded as failed")
-            if a.keep_failed:
-                still[ref] = cell
-            continue
-
-        errs = validate(str(dest))
-        if errs:
-            rejected += 1
-            print(f"  REJECTED  {ref}")
-            for e in errs:
-                print(f"      - {e}")
-            dest.unlink()
-            still[ref] = cell
-        else:
-            collected += 1
-            print(f"  collected {ref}")
+        got = {p.stem for p in fetch_outputs(ref, cells)}
+        for cell in cells:
+            dest = ROOT / "results" / f"{cell['id']}.json"
+            if cell["id"] not in got:
+                # A cell the kernel never produced is data too, not a silent gap.
+                dest.write_text(json.dumps({
+                    **{k: cell[k] for k in ("id", "phase", "model", "n", "seed", "break", "budget")},
+                    "status": "failed",
+                    "failure_reason": f"kernel {state}; no output for this cell (check Kaggle logs)",
+                }, indent=2) + "\n")
+                print(f"  NO OUTPUT {cell['id']}  {cell['model']} n={cell['n']}")
+                continue
+            errs = validate(str(dest))
+            if errs:
+                rejected += 1
+                print(f"  REJECTED  {cell['id']}")
+                for e in errs:
+                    print(f"      - {e}")
+                dest.unlink()
+            else:
+                collected += 1
+        print(f"  {state:<8} {ref}  {entry.get('label', '')}")
 
     PENDING.write_text(json.dumps(still, indent=2) + "\n")
     print(f"\n{collected} collected, {rejected} rejected, {len(still)} still pending")

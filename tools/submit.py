@@ -54,9 +54,9 @@ if torch.cuda.is_available():
         raise SystemExit(f"PyTorch {{torch.__version__}} does not support sm_{{cap[0]}}{{cap[1]}}; "
                          f"the compatibility install did not take")
 
-CELL = {cell!r}
+CELLS = {cells!r}
 device = "cuda" if torch.cuda.is_available() else "cpu"
-print("device:", device, "| cell:", CELL, flush=True)
+print(f"device: {{device}} | {{len(CELLS)}} cell(s) in this kernel", flush=True)
 
 # Search rather than hard-code: Kaggle mounts a kernel's output under
 # /kaggle/input/notebooks/<account>/<slug>/, not /kaggle/input/<slug>/. Searching
@@ -69,16 +69,21 @@ if not found:
 data = str(found[0])
 print("data:", data, flush=True)
 
-try:
-    result = run(CELL, data, epochs={epochs}, device=device)
-except Exception as exc:
-    # A failure is a recorded outcome, not a silent gap in the grid.
-    result = {{**{{k: CELL[k] for k in ("id","phase","model","n","seed","break","budget")}},
-              "status": "failed", "failure_reason": f"{{type(exc).__name__}}: {{exc}}"[:500]}}
-    print("FAILED:", result["failure_reason"], flush=True)
-
-pathlib.Path("/kaggle/working/result.json").write_text(json.dumps(result, indent=2))
-print(json.dumps(result, indent=2), flush=True)
+# One kernel per group of cells: the compatibility install costs ~163 s and the
+# smallest cells train in under a second, so per-cell kernels spend nearly all
+# their time on setup. Each cell still writes its own result file, so a kernel
+# that dies part-way keeps the cells that already finished.
+for i, CELL in enumerate(CELLS, 1):
+    print(f"--- cell {{i}}/{{len(CELLS)}}: {{CELL['model']}} n={{CELL['n']}} seed={{CELL['seed']}}",
+          flush=True)
+    try:
+        result = run(CELL, data, epochs={epochs}, device=device)
+    except Exception as exc:
+        result = {{**{{k: CELL[k] for k in ("id","phase","model","n","seed","break","budget")}},
+                  "status": "failed", "failure_reason": f"{{type(exc).__name__}}: {{exc}}"[:500]}}
+        print("FAILED:", result["failure_reason"], flush=True)
+    pathlib.Path(f"/kaggle/working/{{CELL['id']}}.json").write_text(json.dumps(result, indent=2))
+    print(json.dumps(result, indent=2), flush=True)
 '''
 
 
@@ -129,7 +134,7 @@ def main() -> None:
     if a.cell:
         queue = [c for c in grid if c["id"] == a.cell]
     else:
-        submitted_ids = {v["id"] for v in pending.values()}
+        submitted_ids = {c["id"] for v in pending.values() for c in v.get("cells", [])}
         queue = [c for c in grid
                  if c["phase"] == a.phase and c["id"] not in done and c["id"] not in submitted_ids]
 
@@ -140,25 +145,37 @@ def main() -> None:
         print(f"{len(queue)} cell(s) waiting; no free slot")
         return
 
+    # Group by (model, seed, break): one kernel covers all six training-set sizes
+    # for that combination. The compatibility install costs ~163 s while the
+    # smallest cells train in under a second, so per-cell kernels spend nearly all
+    # their time on setup. Grouping by model alone would put M3's largest cells in
+    # one kernel and risk the 12-hour limit.
+    groups: dict[tuple, list[dict]] = {}
+    for c in queue:
+        groups.setdefault((c["model"], c["seed"], c["break"]), []).append(c)
+    for g in groups.values():
+        g.sort(key=lambda c: c["n"])      # cheap cells first, so a truncated kernel still delivers
+
     source = bundle()
-    for cell in queue[:slots]:
-        slug = f"sb-{cell['id']}"
-        script = HEADER.format(source=source, cell=cell, epochs=a.epochs,
+    for (model, seed, brk), cells in list(groups.items())[:slots]:
+        slug = f"sb-p{a.phase}-{model.lower()}-s{seed}-{brk}"
+        script = HEADER.format(source=source, cells=cells, epochs=a.epochs,
                                data_kernel=DATA_KERNEL)
+        label = f"{model} seed={seed} break={brk} ({len(cells)} cells)"
         if a.dry_run:
-            print(f"  [dry-run] {slug}  {cell['model']} n={cell['n']} seed={cell['seed']}")
+            print(f"  [dry-run] {slug}  {label}")
             continue
         # Internet must stay on: the cell installs a PyTorch build that still
         # supports the P100 Kaggle hands out. With it off, pip fails silently
         # ("from versions: none") and the cell runs on the incompatible build.
         ref = push_kernel(slug, script, kernels=[f"{username()}/{DATA_KERNEL}"],
                           gpu=True, internet=True)
-        pending[ref] = cell
-        print(f"  dispatched {ref}  {cell['model']} n={cell['n']} seed={cell['seed']}")
+        pending[ref] = {"cells": cells, "label": label}
+        print(f"  dispatched {ref}  {label}")
 
     if not a.dry_run:
         save_pending(pending)
-        print(f"{len(queue) - min(slots, len(queue))} cell(s) still waiting")
+        print(f"{max(0, len(groups) - slots)} group(s) still waiting")
 
 
 if __name__ == "__main__":
