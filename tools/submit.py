@@ -34,10 +34,16 @@ CELL = {cell!r}
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("device:", device, "| cell:", CELL, flush=True)
 
-data = "/kaggle/input/{data_kernel}/toptagging.npz"
-if not pathlib.Path(data).exists():
-    have = [str(p) for p in pathlib.Path("/kaggle/input").glob("*/*")][:20]
-    raise SystemExit(f"prepared dataset missing at {{data}}; /kaggle/input contains {{have}}")
+# Search rather than hard-code: Kaggle mounts a kernel's output under
+# /kaggle/input/notebooks/<account>/<slug>/, not /kaggle/input/<slug>/. Searching
+# keeps the account name out of the repository and survives Kaggle changing the
+# layout again.
+found = sorted(pathlib.Path("/kaggle/input").rglob("toptagging.npz"))
+if not found:
+    have = [str(p) for p in pathlib.Path("/kaggle/input").rglob("*")][:25]
+    raise SystemExit(f"prepared dataset not found; /kaggle/input contains {{have}}")
+data = str(found[0])
+print("data:", data, flush=True)
 
 try:
     result = run(CELL, data, epochs={epochs}, device=device)
