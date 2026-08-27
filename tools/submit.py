@@ -42,6 +42,18 @@ sys.path.insert(0, ".")
 import torch
 from src.train import run
 
+# Verify the install actually took. A silent pip failure previously left the cell
+# running on an incompatible build and failing much later with a CUDA error that
+# said nothing about its real cause.
+if torch.cuda.is_available():
+    cap = torch.cuda.get_device_capability(0)
+    archs = torch.cuda.get_arch_list()
+    print(f"torch {{torch.__version__}} | device {{torch.cuda.get_device_name(0)}} "
+          f"sm_{{cap[0]}}{{cap[1]}} | supports {{archs}}", flush=True)
+    if f"sm_{{cap[0]}}{{cap[1]}}" not in archs:
+        raise SystemExit(f"PyTorch {{torch.__version__}} does not support sm_{{cap[0]}}{{cap[1]}}; "
+                         f"the compatibility install did not take")
+
 CELL = {cell!r}
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("device:", device, "| cell:", CELL, flush=True)
@@ -136,8 +148,11 @@ def main() -> None:
         if a.dry_run:
             print(f"  [dry-run] {slug}  {cell['model']} n={cell['n']} seed={cell['seed']}")
             continue
+        # Internet must stay on: the cell installs a PyTorch build that still
+        # supports the P100 Kaggle hands out. With it off, pip fails silently
+        # ("from versions: none") and the cell runs on the incompatible build.
         ref = push_kernel(slug, script, kernels=[f"{username()}/{DATA_KERNEL}"],
-                          gpu=True, internet=False)
+                          gpu=True, internet=True)
         pending[ref] = cell
         print(f"  dispatched {ref}  {cell['model']} n={cell['n']} seed={cell['seed']}")
 
