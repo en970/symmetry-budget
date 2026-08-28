@@ -1,0 +1,30 @@
+{
+  "phase": 3,
+  "cells_total": 24,
+  "cells_ok": 24,
+  "cells_failed": 0,
+  "verdict": "falsified",
+  "reason": "advantage is stable at every tested size",
+  "detail": [
+    "n=1,000: gap +40.8 -> +37.4 (92% of the matched-params gap)",
+    "n=3,000: gap +53.1 -> +47.7 (90% of the matched-params gap)",
+    "n=10,000: gap +172.2 -> +167.4 (97% of the matched-params gap)",
+    "n=30,000: gap +317.9 -> +291.4 (92% of the matched-params gap)",
+    "n=100,000: gap +454.3 -> +426.2 (94% of the matched-params gap)",
+    "n=300,000: gap +446.9 -> +414.3 (93% of the matched-params gap)"
+  ],
+  "cost_note": [
+    "n=1,000 M1: 4.7s mean train time",
+    "n=1,000 M3: 29.5s mean train time",
+    "n=3,000 M1: 13.3s mean train time",
+    "n=3,000 M3: 87.7s mean train time",
+    "n=10,000 M1: 43.9s mean train time",
+    "n=10,000 M3: 292.0s mean train time",
+    "n=30,000 M1: 131.8s mean train time",
+    "n=30,000 M3: 876.2s mean train time",
+    "n=100,000 M1: 439.4s mean train time",
+    "n=100,000 M3: 2927.8s mean train time",
+    "n=300,000 M1: 1315.6s mean train time",
+    "n=300,000 M3: 8824.8s mean train time"
+  ]
+}

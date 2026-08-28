@@ -25,8 +25,6 @@ Equivariant (M3) vs augmented baseline (M1), by training-set size.
 
 ## Phase 3
 
-- cells: 0/24 returned, 0 failed
-- state: **open**
-
-Metrics withheld until the phase closes (PROTOCOL §5).
+- cells: 24/24 returned, 0 failed
+- state: **closed**
 
