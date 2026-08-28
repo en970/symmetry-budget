@@ -1,120 +1,120 @@
 {
-  "enesoz970/sb-p1-m3-s0-none": {
+  "enesoz970/sb-p2-m1-s0-acceptance": {
     "cells": [
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 1000,
         "seed": 0,
-        "break": "none",
+        "break": "acceptance",
         "budget": "params",
-        "id": "a4a388d941"
+        "id": "1d2577327d"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 3000,
         "seed": 0,
-        "break": "none",
+        "break": "acceptance",
         "budget": "params",
-        "id": "8933f2ea47"
+        "id": "55c02b65b7"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 10000,
         "seed": 0,
-        "break": "none",
+        "break": "acceptance",
         "budget": "params",
-        "id": "265dfc29d4"
+        "id": "8d045943ea"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 30000,
         "seed": 0,
-        "break": "none",
+        "break": "acceptance",
         "budget": "params",
-        "id": "532ea6e441"
+        "id": "35638d7d0e"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 100000,
         "seed": 0,
-        "break": "none",
+        "break": "acceptance",
         "budget": "params",
-        "id": "77db38c659"
+        "id": "6455d3c57a"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 300000,
         "seed": 0,
-        "break": "none",
+        "break": "acceptance",
         "budget": "params",
-        "id": "cd82d6eb69"
+        "id": "87f417464a"
       }
     ],
-    "label": "M3 seed=0 break=none (6 cells)"
+    "label": "M1 seed=0 break=acceptance (6 cells)"
   },
-  "enesoz970/sb-p1-m3-s1-none": {
+  "enesoz970/sb-p2-m1-s0-axis": {
     "cells": [
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 1000,
-        "seed": 1,
-        "break": "none",
+        "seed": 0,
+        "break": "axis",
         "budget": "params",
-        "id": "e80eb9b5f9"
+        "id": "d40ab7c29f"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 3000,
-        "seed": 1,
-        "break": "none",
+        "seed": 0,
+        "break": "axis",
         "budget": "params",
-        "id": "0d8d180fcb"
+        "id": "0b515c4601"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 10000,
-        "seed": 1,
-        "break": "none",
+        "seed": 0,
+        "break": "axis",
         "budget": "params",
-        "id": "7c1dd574f7"
+        "id": "1b2546d486"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 30000,
-        "seed": 1,
-        "break": "none",
+        "seed": 0,
+        "break": "axis",
         "budget": "params",
-        "id": "dbc7d30923"
+        "id": "6037afe8cf"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 100000,
-        "seed": 1,
-        "break": "none",
+        "seed": 0,
+        "break": "axis",
         "budget": "params",
-        "id": "d6e5cd4049"
+        "id": "c5cbde691d"
       },
       {
-        "phase": 1,
-        "model": "M3",
+        "phase": 2,
+        "model": "M1",
         "n": 300000,
-        "seed": 1,
-        "break": "none",
+        "seed": 0,
+        "break": "axis",
         "budget": "params",
-        "id": "3b1057b3fd"
+        "id": "10a8655b5e"
       }
     ],
-    "label": "M3 seed=1 break=none (6 cells)"
+    "label": "M1 seed=0 break=axis (6 cells)"
   }
 }
