@@ -1,0 +1,17 @@
+{
+  "id": "d406acc215",
+  "phase": 2,
+  "model": "M3",
+  "n": 3000,
+  "seed": 1,
+  "break": "axis",
+  "budget": "params",
+  "rej_at_30": 36.47912885662432,
+  "auc": 0.9128192479811995,
+  "accuracy": 0.845075,
+  "train_seconds": 87.77,
+  "n_params": 97952,
+  "flops_per_forward": 1069142976,
+  "status": "ok",
+  "synthetic": false
+}

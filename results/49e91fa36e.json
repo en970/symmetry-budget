@@ -1,0 +1,17 @@
+{
+  "id": "49e91fa36e",
+  "phase": 2,
+  "model": "M3",
+  "n": 30000,
+  "seed": 1,
+  "break": "acceptance",
+  "budget": "params",
+  "rej_at_30": 490.24390243902445,
+  "auc": 0.9690216680417011,
+  "accuracy": 0.90325,
+  "train_seconds": 877.04,
+  "n_params": 97952,
+  "flops_per_forward": 1069142976,
+  "status": "ok",
+  "synthetic": false
+}
