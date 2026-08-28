@@ -24,15 +24,21 @@ SPECS = {
 # Which view of a jet each model consumes.
 INPUT = {"M0": "features", "M1": "features", "M2": "features", "M3": "p4"}
 
-# Phase 3 (PROTOCOL amendment A1): matched forward-pass FLOPs instead of matched
-# parameters. Measured at P=100, M3 costs 1.069B FLOPs per example against M1's
-# 10.1M — a factor of 106 at equal parameter count. Reaching M3's budget takes
-# M1 at hidden=1396 (7.8M parameters against M3's 98k).
+# Phase 3 (PROTOCOL amendments A1, A2): matched forward-pass FLOPs instead of
+# matched parameters. Measured at P=100, M3 costs 1,069,142,976 FLOPs per example
+# against M1's 10.1M — a factor of 106 at equal parameter count.
 #
 # The baseline is enlarged rather than the equivariant model shrunk: shrinking
 # M3 would cripple the model under test and manufacture H3's predicted result.
+#
+# hidden=1625 reaches 1,069,094,000 FLOPs/forward, 99.995% of M3's cost. A1 said
+# 1396, which reaches only 789,281,648 — 74%. That was asserted, never measured,
+# and it under-provisioned the baseline by 26% in the one comparison whose entire
+# purpose is to hold cost equal; see A2. Any future change here must be solved
+# against src.train.measure_flops, not estimated: the test this number defines
+# cannot be trusted to a scaling argument.
 FLOPS_MATCHED = {
-    "M1": dict(hidden=1396, latent=1396),
+    "M1": dict(hidden=1625, latent=1625),
 }
 
 

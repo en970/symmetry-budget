@@ -151,3 +151,51 @@ certainly overfit at n=1,000. That is not a flaw in the design — it is a real 
 comparison, and it makes H3 falsifiable in an informative direction: if the enlarged baseline
 fails at small N *because* it overfits, then equivariance is buying sample efficiency rather
 than merely spending compute, and H3 is falsified for a reason worth reporting.
+
+### A2 — 2026-08-28: the matched-FLOPs baseline was never actually matched
+
+**Recorded while Phase 3 is open. No Phase 3 outcome metric was consulted in reaching this
+decision** — only `flops_per_forward` and `n_params`, which are cost fields fixed by the
+architecture before a single gradient step. Phase 3's `rej_at_30`, `auc` and `accuracy`
+remain unread, as §5 requires.
+
+A1 committed Phase 3 to matching *forward-pass FLOPs* and stated that reaching M3's cost
+required M1 at `hidden=1396`. That number was asserted, not measured, and it is wrong.
+Measured with `src.train.measure_flops` at P=100, the harness that produced every recorded
+`flops_per_forward` in this repository:
+
+| | FLOPs / forward | fraction of M3 |
+|---|---|---|
+| M3 (reference) | 1,069,142,976 | — |
+| M1 at `hidden=1396` (A1) | 789,281,648 | **74%** |
+| M1 at `hidden=1625` (A2) | 1,069,094,000 | 99.995% |
+
+Both A1 figures reproduce exactly from the Phase 1 and Phase 3 result files, so this is a
+defect in the constant, not in the measurement.
+
+**Why this is not survivable as a stated limitation.** Phase 3 exists to hold cost equal and
+ask what the equivariant advantage is worth once it is. Under-provisioning the baseline by 26%
+in that one comparison inflates the matched-FLOPs gap and biases H3 toward *falsified* — the
+verdict that flatters equivariance. That is the same failure A1 refused when it declined to
+shrink M3: "A hypothesis must not be handed its own evidence." A1 refused it in one direction
+and then committed it in the other.
+
+**Decision.** `FLOPS_MATCHED` becomes `hidden=1625, latent=1625`. The twelve Phase 3 M1 cells
+already run at `hidden=1396` (6 N × 2 seeds) are **superseded, not deleted**: they are moved to
+`results/superseded/` with this amendment's date, and re-run at the corrected width. Per §5,
+they are retained and reported rather than silently dropped.
+
+Phase 3's M3 cells are unaffected — M3 is the fixed reference and does not appear in
+`FLOPS_MATCHED`. Phases 1 and 2 are unaffected: the constant is read only when
+`budget == "flops"`, which is Phase 3 only.
+
+**Updated known limitation.** A1 anticipated a baseline of 7.8M parameters against M3's 98k,
+an 80-fold capacity gap, and predicted it would overfit at n=1,000. At `hidden=1625` the
+baseline is 10,585,252 parameters — a 108-fold gap. A1's stated limitation therefore applies
+more strongly, not less, and in the same informative direction: if the enlarged baseline fails
+at small N *because* it overfits, equivariance is buying sample efficiency rather than merely
+spending compute, and H3 is falsified for a reason worth reporting.
+
+**Rule for any future change to this constant.** It must be solved against
+`src.train.measure_flops`, never estimated from a scaling argument. The comparison this number
+defines is the one the whole phase rests on.
