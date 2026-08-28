@@ -1,0 +1,17 @@
+{
+  "id": "e6045acc2a",
+  "phase": 2,
+  "model": "M1",
+  "n": 3000,
+  "seed": 1,
+  "break": "axis",
+  "budget": "params",
+  "rej_at_30": 30.180180180180184,
+  "auc": 0.9323156228905722,
+  "accuracy": 0.88595,
+  "train_seconds": 1.45,
+  "n_params": 99530,
+  "flops_per_forward": 10050768,
+  "status": "ok",
+  "synthetic": false
+}
