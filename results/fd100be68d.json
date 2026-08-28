@@ -1,0 +1,17 @@
+{
+  "id": "fd100be68d",
+  "phase": 3,
+  "model": "M3",
+  "n": 30000,
+  "seed": 0,
+  "break": "none",
+  "budget": "flops",
+  "rej_at_30": 346.55172413793105,
+  "auc": 0.9742933823345583,
+  "accuracy": 0.920175,
+  "train_seconds": 876.31,
+  "n_params": 97952,
+  "flops_per_forward": 1069142976,
+  "status": "ok",
+  "synthetic": false
+}

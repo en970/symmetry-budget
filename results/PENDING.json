@@ -1,120 +1,120 @@
 {
-  "enesoz970/sb-p3-m3-s0-none": {
+  "enesoz970/sb-p3-m1-s0-none": {
     "cells": [
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 1000,
         "seed": 0,
         "break": "none",
         "budget": "flops",
-        "id": "684aeaeb99"
+        "id": "86f0eebfe0"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 3000,
         "seed": 0,
         "break": "none",
         "budget": "flops",
-        "id": "60b63c6a58"
+        "id": "b20cba7c32"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 10000,
         "seed": 0,
         "break": "none",
         "budget": "flops",
-        "id": "1025707860"
+        "id": "b918007d24"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 30000,
         "seed": 0,
         "break": "none",
         "budget": "flops",
-        "id": "fd100be68d"
+        "id": "c698c338e4"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 100000,
         "seed": 0,
         "break": "none",
         "budget": "flops",
-        "id": "50b0081edd"
+        "id": "2aa30a7690"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 300000,
         "seed": 0,
         "break": "none",
         "budget": "flops",
-        "id": "a5c7fb8fab"
+        "id": "aabd1920a4"
       }
     ],
-    "label": "M3 seed=0 break=none (6 cells)"
+    "label": "M1 seed=0 break=none (6 cells)"
   },
-  "enesoz970/sb-p3-m3-s1-none": {
+  "enesoz970/sb-p3-m1-s1-none": {
     "cells": [
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 1000,
         "seed": 1,
         "break": "none",
         "budget": "flops",
-        "id": "4a5b0899f3"
+        "id": "7402d32298"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 3000,
         "seed": 1,
         "break": "none",
         "budget": "flops",
-        "id": "98f17d8fac"
+        "id": "3ba777f949"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 10000,
         "seed": 1,
         "break": "none",
         "budget": "flops",
-        "id": "477de78e67"
+        "id": "83c460d28a"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 30000,
         "seed": 1,
         "break": "none",
         "budget": "flops",
-        "id": "6a87d65399"
+        "id": "83f15d4500"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 100000,
         "seed": 1,
         "break": "none",
         "budget": "flops",
-        "id": "dfca57259e"
+        "id": "c0b36ef067"
       },
       {
         "phase": 3,
-        "model": "M3",
+        "model": "M1",
         "n": 300000,
         "seed": 1,
         "break": "none",
         "budget": "flops",
-        "id": "a4fb64f79b"
+        "id": "6cb3115442"
       }
     ],
-    "label": "M3 seed=1 break=none (6 cells)"
+    "label": "M1 seed=1 break=none (6 cells)"
   }
 }
