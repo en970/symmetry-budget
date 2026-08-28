@@ -51,6 +51,26 @@ def open_phase() -> int | None:
     return None
 
 
+def audited(phase: int) -> bool:
+    return (ROOT / "reports" / f"audit-phase{phase}.json").exists()
+
+
+def unaudited_phase() -> int | None:
+    """The first phase whose cells are all in but which has never been audited.
+
+    This has to be its own check rather than a `done >= total` test on the open
+    phase. A single turn's collect() can land the last cells of one phase while
+    the next is already dispatched, and open_phase() then names the successor —
+    so the phase that just finished is never the one under examination, and it
+    crosses the boundary unaudited. Phase 1 did exactly that on 2026-08-28.
+    """
+    for ph in phases():
+        done, _, total = counts(ph)
+        if done >= total and not audited(ph):
+            return ph
+    return None
+
+
 def checkpoint(msg: str, *, push: bool) -> None:
     sh("git", "add", "results", "reports")
     if sh("git", "diff", "--cached", "--quiet")[0] == 0:
@@ -100,6 +120,13 @@ def main() -> int:
 
     print("— collect —")
     print(sh(sys.executable, "tools/collect.py")[1])
+
+    # Before anything else: a phase that finished in an earlier turn and was never
+    # audited is closed now. Auditing is not optional and not retrospective — no
+    # later phase may be dispatched on top of an unexamined one.
+    stale = unaudited_phase()
+    if stale is not None and a.phase in (None, stale):
+        return close_phase(stale, push=not a.no_push)
 
     phase = a.phase or open_phase()
     if phase is None:
