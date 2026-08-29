@@ -18,13 +18,69 @@ Equivariant (M3) vs augmented baseline (M1), by training-set size.
 | 100,000 | M3 > M1 | 115.6 vs 569.9 (ranges disjoint) |
 | 300,000 | M3 > M1 | 204.2 vs 651.1 (ranges disjoint) |
 
+**Symmetry budget** (PROTOCOL §4): relative gain in 1/ε_B over M1, divided by relative cost increase over M1. A value of 1.0 means the gain and the extra cost are proportional; below 1.0 the equivariant model buys less than it spends.
+
+§4 names three costs and does not say which is the denominator, so all three are shown. Intervals are 95% bootstrap over the metric's background counting noise crossed with a seed resample — a lower bound on the true uncertainty, not a full one (amendment A3).
+
+| N | cost measure | rel. cost | budget | 95% interval |
+|---|---|---|---|---|
+| 1,000 | wall-clock | +3442% | 0.098 | [0.065, 0.143] |
+| 1,000 | FLOPs/forward | +10537% | 0.032 | [0.021, 0.046] |
+| 3,000 | wall-clock | +5737% | 0.031 | [0.007, 0.062] |
+| 3,000 | FLOPs/forward | +10537% | 0.017 | [0.004, 0.034] |
+| 10,000 | wall-clock | +6202% | 0.054 | [0.024, 0.094] |
+| 10,000 | FLOPs/forward | +10537% | 0.032 | [0.014, 0.055] |
+| 30,000 | wall-clock | +6262% | 0.069 | [0.046, 0.106] |
+| 30,000 | FLOPs/forward | +10537% | 0.041 | [0.027, 0.063] |
+| 100,000 | wall-clock | +6318% | 0.062 | [0.037, 0.104] |
+| 100,000 | FLOPs/forward | +10537% | 0.037 | [0.022, 0.062] |
+| 300,000 | wall-clock | +6287% | 0.035 | [0.022, 0.055] |
+| 300,000 | FLOPs/forward | +10537% | 0.021 | [0.013, 0.033] |
+
+Cost measures §4 names that could not be computed here: **parameters** (denominator -1.6%, not a cost increase).
+
 ## Phase 2
 
 - cells: 48/48 returned, 0 failed
 - state: **closed**
 
+**Symmetry budget** (PROTOCOL §4): relative gain in 1/ε_B over M1, divided by relative cost increase over M1. A value of 1.0 means the gain and the extra cost are proportional; below 1.0 the equivariant model buys less than it spends.
+
+§4 names three costs and does not say which is the denominator, so all three are shown. Intervals are 95% bootstrap over the metric's background counting noise crossed with a seed resample — a lower bound on the true uncertainty, not a full one (amendment A3).
+
+| N | break | cost measure | rel. cost | budget | 95% interval |
+|---|---|---|---|---|---|
+| 1,000 | acceptance | wall-clock | +3252% | 0.094 | [0.076, 0.118] |
+| 1,000 | acceptance | FLOPs/forward | +10537% | 0.029 | [0.023, 0.036] |
+| 3,000 | acceptance | wall-clock | +5296% | 0.041 | [0.018, 0.068] |
+| 3,000 | acceptance | FLOPs/forward | +10537% | 0.020 | [0.009, 0.034] |
+| 10,000 | acceptance | wall-clock | +5594% | 0.074 | [0.048, 0.110] |
+| 10,000 | acceptance | FLOPs/forward | +10537% | 0.039 | [0.025, 0.059] |
+| 30,000 | acceptance | wall-clock | +5642% | 0.072 | [0.046, 0.111] |
+| 30,000 | acceptance | FLOPs/forward | +10537% | 0.038 | [0.025, 0.059] |
+| 100,000 | acceptance | wall-clock | +5792% | 0.041 | [0.026, 0.064] |
+| 100,000 | acceptance | FLOPs/forward | +10537% | 0.023 | [0.014, 0.035] |
+| 300,000 | acceptance | wall-clock | +5699% | 0.033 | [0.018, 0.057] |
+| 300,000 | acceptance | FLOPs/forward | +10537% | 0.018 | [0.010, 0.031] |
+| 1,000 | axis | wall-clock | +3489% | 0.033 | [0.023, 0.047] |
+| 1,000 | axis | FLOPs/forward | +10537% | 0.011 | [0.008, 0.016] |
+| 3,000 | axis | wall-clock | +5883% | 0.001 | [-0.002, 0.006] |
+| 3,000 | axis | FLOPs/forward | +10537% | 0.001 | [-0.001, 0.003] |
+| 10,000 | axis | wall-clock | +6367% | 0.015 | [0.011, 0.020] |
+| 10,000 | axis | FLOPs/forward | +10537% | 0.009 | [0.007, 0.012] |
+| 30,000 | axis | wall-clock | +6316% | 0.032 | [0.021, 0.049] |
+| 30,000 | axis | FLOPs/forward | +10537% | 0.019 | [0.013, 0.030] |
+| 100,000 | axis | wall-clock | +6344% | 0.034 | [0.019, 0.057] |
+| 100,000 | axis | FLOPs/forward | +10537% | 0.021 | [0.011, 0.034] |
+| 300,000 | axis | wall-clock | +6259% | 0.031 | [0.020, 0.051] |
+| 300,000 | axis | FLOPs/forward | +10537% | 0.019 | [0.012, 0.030] |
+
+Cost measures §4 names that could not be computed here: **parameters** (denominator -1.6%, not a cost increase).
+
 ## Phase 3
 
-- cells: 24/24 returned, 0 failed
-- state: **closed**
+- cells: 12/24 returned, 0 failed
+- state: **open**
+
+Metrics withheld until the phase closes (PROTOCOL §5).
 

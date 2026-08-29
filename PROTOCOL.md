@@ -199,3 +199,49 @@ spending compute, and H3 is falsified for a reason worth reporting.
 **Rule for any future change to this constant.** It must be solved against
 `src.train.measure_flops`, never estimated from a scaling argument. The comparison this number
 defines is the one the whole phase rests on.
+
+### A3 — 2026-08-29: the symmetry budget is implemented; two analysis defects are recorded, not fixed
+
+**Written after Phases 1 and 2 closed and were audited.** That timing is why this amendment
+distinguishes carefully between adding a quantity §4 already required and changing a rule that
+decides a hypothesis. It does the first and refuses the second.
+
+**1. The headline metric existed only on paper.** §4 names the "symmetry budget" — relative
+gain in 1/ε_B over M1 divided by relative cost increase over M1, "reported with its confidence
+interval, never as a bare point estimate" — and nothing in this repository computed it. It is
+now in `tools/report.py` and appears for every closed phase.
+
+**2. §4 does not say which cost is the denominator.** It names three (wall-clock training
+seconds, parameter count, measured FLOPs/forward). They disagree by roughly a factor of three.
+Picking one now, with the results visible, is exactly the freedom this document exists to
+remove, so the report shows all three and privileges none. Under `budget=params` the
+parameter-count denominator is *negative* — M3 is deliberately the smaller model — so the
+ratio is undefined there; the report says so per measure rather than omitting the row, since a
+cost measure that cannot be computed is itself a finding about §4's definition.
+
+**3. The interval is a bootstrap, and it is a lower bound.** Two seeds cannot carry a
+confidence interval. 1/ε_B is a count ratio, so each cell's value is B/k for an integer k of
+surviving background jets; B = 20,100 is inferred from the metric itself rather than
+hard-coded. The interval resamples k as Poisson and resamples across seeds. It omits every
+source of variation not visible in two draws and must not be read as a full uncertainty.
+
+**4. Two defects in the verdict code are recorded here and deliberately left in place.**
+Both were found by the adversarial audits of Phases 1 and 2. Changing analysis code that
+decides a hypothesis, after seeing what it decided, is the researcher degree of freedom this
+protocol was written to prevent — so the frozen rule stands and its consequence is stated
+instead:
+
+- `audit_phase1()`'s monotonicity test is non-strict (`b <= a`). §2 names a *flat* gap as
+  falsifying, but a perfectly flat series would return "partially supported". Phase 1's gap is
+  not flat, so this did not affect the recorded H1 verdict.
+- `audit_phase2()` divides by the mean of the unbroken baseline, discarding that baseline's own
+  two-seed spread instead of propagating it. Propagating it reduces the comparisons that clear
+  §4's noise rule from 6 of 12 to 4 of 12, all of them from the `axis` break alone; `acceptance`
+  clears none. The frozen rule reports H2 as **supported**; the same data under propagated
+  uncertainty supports **inconclusive**, which is what the Phase 2 adversarial audit returned.
+  Both are on the record and the report states them together.
+
+Additionally, `audit_phase2()`'s 0.75 / 0.25 decision thresholds appear nowhere in §2–§5. They
+were written into `tools/audit.py` before any Phase 2 data existed, so they are not reverse-fit,
+but they were never appended here as §5 requires for a rule that decides a verdict. They are
+appended now, as a record of what the code does — not as a ratification of it.
