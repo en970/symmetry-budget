@@ -25,3 +25,18 @@ of M3's 1,069,142,976, not the match A1 committed Phase 3 to. Re-run at hidden=1
 | `b918007d24` | 10,000 | 0 | 789,281,648 | 7,814,810 |
 | `c0b36ef067` | 100,000 | 1 | 789,281,648 | 7,814,810 |
 | `c698c338e4` | 30,000 | 0 | 789,281,648 | 7,814,810 |
+
+## 2026-08-28 — the re-run that never happened
+
+The twelve cells above were re-dispatched at 19:43 after A2, and `collect.py` reported
+them collected at 20:14. They were not re-run: the returned files are byte-identical to
+the superseded copies, `train_seconds` included, which no genuine re-execution produces.
+Kaggle serves the last completed output for a slug and re-pushing does not clear it, and
+`collect.py` had no way to tell which run an output came from.
+
+`audit-phase3-superseded.json` is the H3 verdict computed from those stale cells
+("falsified — advantage is stable at every tested size"). It is kept as the record of
+what the under-provisioned baseline produced, and is not a result.
+
+Fixed by stamping a per-dispatch `run_token` into every result and rejecting outputs
+that do not carry the expected one.

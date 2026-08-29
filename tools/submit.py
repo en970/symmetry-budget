@@ -8,7 +8,7 @@ would not be between models but between commits.
 """
 from __future__ import annotations
 
-import argparse, json, pathlib, sys
+import argparse, hashlib, json, pathlib, sys, time
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from tools.kaggle_common import push_kernel, kernel_status, username  # noqa: E402
@@ -55,6 +55,7 @@ if torch.cuda.is_available():
                          f"the compatibility install did not take")
 
 CELLS = {cells!r}
+RUN_TOKEN = {token!r}
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"device: {{device}} | {{len(CELLS)}} cell(s) in this kernel", flush=True)
 
@@ -82,6 +83,11 @@ for i, CELL in enumerate(CELLS, 1):
         result = {{**{{k: CELL[k] for k in ("id","phase","model","n","seed","break","budget")}},
                   "status": "failed", "failure_reason": f"{{type(exc).__name__}}: {{exc}}"[:500]}}
         print("FAILED:", result["failure_reason"], flush=True)
+    # Stamped so collect.py can tell this run's output from a previous version's.
+    # Kaggle keeps the last completed output under a slug, and re-pushing does not
+    # clear it: without this the collector cannot see that it is reading a result
+    # produced by source that has since been corrected.
+    result["run_token"] = RUN_TOKEN
     pathlib.Path(f"/kaggle/working/{{CELL['id']}}.json").write_text(json.dumps(result, indent=2))
     print(json.dumps(result, indent=2), flush=True)
 '''
@@ -159,8 +165,17 @@ def main() -> None:
     source = bundle()
     for (model, seed, brk), cells in list(groups.items())[:slots]:
         slug = f"sb-p{a.phase}-{model.lower()}-s{seed}-{brk}"
+        # Identifies this dispatch. Kaggle keeps the last completed output under a
+        # slug and re-pushing does not clear it, so a collector with no run
+        # identity happily reads the previous version's results back as if they
+        # were the new run's. That is not hypothetical: on 2026-08-28 the twelve
+        # Phase 3 M1 cells were re-dispatched after amendment A2 corrected their
+        # width, and collect.py returned the superseded outputs byte-for-byte,
+        # train_seconds included. The token travels into every result file.
+        token = hashlib.sha256(
+            f"{slug}|{cells!r}|{time.time_ns()}".encode()).hexdigest()[:12]
         script = HEADER.format(source=source, cells=cells, epochs=a.epochs,
-                               data_kernel=DATA_KERNEL)
+                               data_kernel=DATA_KERNEL, token=token)
         label = f"{model} seed={seed} break={brk} ({len(cells)} cells)"
         if a.dry_run:
             print(f"  [dry-run] {slug}  {label}")
@@ -170,8 +185,8 @@ def main() -> None:
         # ("from versions: none") and the cell runs on the incompatible build.
         ref = push_kernel(slug, script, kernels=[f"{username()}/{DATA_KERNEL}"],
                           gpu=True, internet=True)
-        pending[ref] = {"cells": cells, "label": label}
-        print(f"  dispatched {ref}  {label}")
+        pending[ref] = {"cells": cells, "label": label, "run_token": token}
+        print(f"  dispatched {ref}  {label}  token={token}")
 
     if not a.dry_run:
         save_pending(pending)

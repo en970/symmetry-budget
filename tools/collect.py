@@ -34,6 +34,14 @@ def fetch_outputs(ref: str, cells: list[dict]) -> list[pathlib.Path]:
     return got
 
 
+def _token_of(cell_id: str) -> str | None:
+    """The run token stamped into a freshly fetched result, if any."""
+    try:
+        return json.loads((ROOT / "results" / f"{cell_id}.json").read_text()).get("run_token")
+    except Exception:
+        return None
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--keep-failed", action="store_true",
@@ -55,6 +63,25 @@ def main() -> None:
             continue
 
         got = {p.stem for p in fetch_outputs(ref, cells)}
+
+        # Kaggle serves the last completed output for a slug, and re-pushing does
+        # not clear it. Without an identity check the collector reads a previous
+        # version's results back as though they were this dispatch's — which is
+        # exactly what happened to the twelve Phase 3 M1 cells on 2026-08-28,
+        # silently undoing amendment A2. Cells dispatched before tokens existed
+        # have no expectation recorded and are collected as before.
+        want = entry.get("run_token")
+        if want:
+            stale = [c["id"] for c in cells if c["id"] in got and _token_of(c["id"]) != want]
+            if stale:
+                for cid in stale:
+                    (ROOT / "results" / f"{cid}.json").unlink(missing_ok=True)
+                still[ref] = entry
+                print(f"  STALE    {ref}  {entry.get('label', '')}\n"
+                      f"      {len(stale)} output(s) carry an older run token; expected "
+                      f"{want}. Kernel state was '{state}'. Left pending, not collected.")
+                continue
+
         for cell in cells:
             dest = ROOT / "results" / f"{cell['id']}.json"
             if cell["id"] not in got:
