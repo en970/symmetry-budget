@@ -13,6 +13,17 @@ import json, pathlib, random, statistics, sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RESULTS, REPORTS = ROOT / "results", ROOT / "reports"
 
+# Where the adversarial audit reached a different verdict than the frozen rule,
+# both are printed. The frozen rule is not edited to agree with the audit — that
+# would be changing a verdict rule after seeing what it decided — so the
+# disagreement is carried in the report instead of resolved in the code (A3).
+CONTESTED = {
+    2: "- verdict (adversarial audit): **inconclusive** — `audit_phase2()` divides by the "
+       "mean of the unbroken baseline and discards that baseline's own two-seed spread. "
+       "Propagating it drops the comparisons clearing §4's noise rule from 6 of 12 to 4 of "
+       "12, all from the `axis` break; `acceptance` clears none. See PROTOCOL amendment A3.",
+}
+
 
 def load() -> list[dict]:
     out = []
@@ -182,6 +193,19 @@ def main() -> None:
             lines += ["More than 20% of cells failed. Reported as inconclusive; the "
                       "surviving cells are not analysed (PROTOCOL §5).", ""]
             continue
+
+        # The verdict the frozen rule produced, quoted from the audit artefact
+        # rather than recomputed here, so the report cannot drift from it.
+        audit = REPORTS / f"audit-phase{phase}.json"
+        if audit.exists():
+            try:
+                a = json.loads(audit.read_text())
+                lines += [f"- verdict (pre-registered rule): **{a.get('verdict')}** — "
+                          f"{a.get('reason')}", ""]
+            except Exception:
+                pass
+        if phase in CONTESTED:
+            lines += [CONTESTED[phase], ""]
 
         if phase == 1:
             lines += ["Equivariant (M3) vs augmented baseline (M1), by training-set size.",
