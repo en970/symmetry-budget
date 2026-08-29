@@ -1,0 +1,18 @@
+{
+  "id": "b918007d24",
+  "phase": 3,
+  "model": "M1",
+  "n": 10000,
+  "seed": 0,
+  "break": "none",
+  "budget": "flops",
+  "rej_at_30": 49.385749385749385,
+  "auc": 0.940960646516163,
+  "accuracy": 0.873875,
+  "train_seconds": 64.04,
+  "n_params": 10585252,
+  "flops_per_forward": 1069094000,
+  "status": "ok",
+  "synthetic": false,
+  "run_token": "5d3ca4cf236d"
+}

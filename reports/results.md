@@ -85,8 +85,29 @@ Cost measures §4 names that could not be computed here: **parameters** (denomin
 
 ## Phase 3
 
-- cells: 12/24 returned, 0 failed
-- state: **open**
+- cells: 24/24 returned, 0 failed
+- state: **closed**
 
-Metrics withheld until the phase closes (PROTOCOL §5).
+- verdict (pre-registered rule): **falsified** — advantage is stable at every tested size
+
+**Symmetry budget** (PROTOCOL §4): relative gain in 1/ε_B over M1, divided by relative cost increase over M1. A value of 1.0 means the gain and the extra cost are proportional; below 1.0 the equivariant model buys less than it spends.
+
+§4 names three costs and does not say which is the denominator, so all three are shown. Intervals are 95% bootstrap over the metric's background counting noise crossed with a seed resample — a lower bound on the true uncertainty, not a full one (amendment A3).
+
+| N | cost measure | rel. cost | budget | 95% interval |
+|---|---|---|---|---|
+| 1,000 | wall-clock | +339% | 0.685 | [0.315, 1.498] |
+| 1,000 | FLOPs/forward | +0% | 50713.289 | [23074.946, 110522.178] |
+| 3,000 | wall-clock | +356% | 0.430 | [0.051, 0.989] |
+| 3,000 | FLOPs/forward | +0% | 33426.802 | [4020.539, 77536.437] |
+| 10,000 | wall-clock | +356% | 0.779 | [0.289, 1.519] |
+| 10,000 | FLOPs/forward | +0% | 60582.495 | [22807.231, 118493.439] |
+| 30,000 | wall-clock | +355% | 0.768 | [0.526, 1.129] |
+| 30,000 | FLOPs/forward | +0% | 59577.827 | [40791.778, 87861.470] |
+| 100,000 | wall-clock | +355% | 0.666 | [0.322, 1.262] |
+| 100,000 | FLOPs/forward | +0% | 51648.243 | [24521.001, 98312.278] |
+| 300,000 | wall-clock | +357% | 0.638 | [0.387, 1.065] |
+| 300,000 | FLOPs/forward | +0% | 49736.729 | [30039.585, 83254.828] |
+
+Cost measures §4 names that could not be computed here: **parameters** (denominator -99.1%, not a cost increase).
 
